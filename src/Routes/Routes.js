@@ -9,7 +9,6 @@ const Routers = () => {
             <Route path='/' element={<Navigate to='home' />} />
             <Route path='home' element={<Guest />} />
             <Route path={'home/:profile' || 'home/profile'} element={<Profile />}/>
-            {/* look why i've made that so in the comment in the Login component (39) */}
         </Routes>
     )
 }

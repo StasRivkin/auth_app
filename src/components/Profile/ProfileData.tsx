@@ -1,26 +1,19 @@
 import React from 'react'
+import { useAppSelector } from '../../app/hooks'
+import { UserProfile } from '../../utils/types'
 
 const ProfileData = () => {
+    
 
-    const user = {
-        'login': 'user-john',
-        'firstName': 'John',
-        'lastName': 'Smith',
-        'roles': [
-            'User'
-        ]
-    }
-
+    const user = useAppSelector<UserProfile>(state => state.user as UserProfile);
+    
     return (
         <div>
-            <p>First Name : {user.firstName}</p>
-            <p>Last Name : {user.lastName}</p>
-
+            <p>First name: {user.firstName}</p>
+            <p>Last name: {user.lastName}</p>
             <ul>
-                {user.roles.map((i, ind) => <li key={ind}>{i}</li>)}
+                {user.roles.map(r => <li key={r}>{r}</li>)}
             </ul>
-
-
         </div>
     )
 }

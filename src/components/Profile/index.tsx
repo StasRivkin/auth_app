@@ -1,22 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
+import { deleteToken } from '../../reducers/tokenSlice';
+import { logOutUser } from '../../reducers/userSlice';
 import ProfileData from './ProfileData';
 import UpdateUser from './UpdateUser';
 
 const Profile = () => {
 
-    const handleClickLogout = () => {
-        console.log('OK');
-        //at that monent we don't need to use that method
-    }
+    const dispatch = useAppDispatch()
 
+    const handleClickLogout = () => {
+        dispatch(logOutUser());
+        dispatch(deleteToken());
+    }
     return (
         <div>
-
             <ProfileData />
-            <Link to='/home'><button onClick={handleClickLogout}>Logout</button></Link>
+            <button onClick={handleClickLogout}>Logout</button>
             <UpdateUser />
-
         </div>
     )
 }

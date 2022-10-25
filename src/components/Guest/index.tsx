@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import Login from './Login';
-import Register from './Register';
+import React, { useState } from 'react'
+import Login from './Login'
+import Register from './Register'
 
 const Guest = () => {
+    const [isLogin, setIsLogin] = useState(true)
 
-    const [isLogin, setIsLogin] = useState(true);
+
 
     return (
         <div>

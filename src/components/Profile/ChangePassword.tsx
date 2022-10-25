@@ -1,64 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { useAppDispatch } from '../../app/hooks';
+import { changePassword } from '../../reducers/asyncActions/asyncActions';
 
 
 interface Props {
-  close: () => void;
+  close: () => void
 }
 
 const ChangePassword = ({ close }: Props) => {
+  const [oldPassword, setOldPassword] = useState('')
+  const [pass1, setPass1] = useState('');
+  const [pass2, setPass2] = useState('');
 
-  const [oldPass, setOldPass] = useState('');
-  const [newPass, setNewPass] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
+  const dispatch = useAppDispatch();
+
+  const handleClickSave = () => {
+    if (pass1 === pass2) {
+      dispatch(changePassword(oldPassword, pass1));
+      close();
+    }
+  }
+
+  const handleClickClear = () => {
+    setOldPassword('');
+    setPass1('');
+    setPass2('');
+  }
 
   return (
     <div>
-
-      <div>
-        <label>Old Password :
-          <input
-            type="password"
-            placeholder='old password'
-            value={oldPass}
-            onChange={e => setOldPass(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>New Password :
-          <input
-            type="password"
-            placeholder='new password'
-            value={newPass}
-            onChange={e => setNewPass(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>Confirm New Password :
-          <input
-            type="password"
-            placeholder='new password'
-            value={confirmPass}
-            onChange={e => setConfirmPass(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <button onClick={() => {
-        console.log(oldPass, newPass, confirmPass);
-      }}>Save</button>
-
-      <button onClick={close}>Return</button>
-      
-      <button onClick={() => {
-        setOldPass('');
-        setNewPass('');
-        setConfirmPass('');
-      }}>Clear</button>
-
+      <label>old password:
+        <input
+          onChange={e => setOldPassword(e.target.value.trim())}
+          value={oldPassword}
+          type='password'
+        />
+      </label>
+      <label>new password:
+        <input
+          onChange={e => setPass1(e.target.value.trim())}
+          value={pass1}
+          type='password'
+        />
+      </label>
+      <label>repeat new password:
+        <input
+          onChange={e => setPass2(e.target.value.trim())}
+          value={pass2}
+          type='password'
+        />
+      </label>
+      <button onClick={handleClickSave}>Save and close</button>
+      <button onClick={handleClickClear}>Clear</button>
+      <button onClick={close}>Close without save</button>
     </div>
   )
 }

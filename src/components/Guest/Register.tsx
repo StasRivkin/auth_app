@@ -1,60 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import { useAppDispatch } from '../../app/hooks';
+import { registrationUser } from '../../reducers/asyncActions/asyncActions';
 
 const Register = () => {
-
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const dispatch = useAppDispatch();
 
     const handleClickRegister = () => {
-        console.log(login, password, firstname, lastname);//FIXME
+        dispatch(registrationUser({login, password, firstName, lastName}));
     }
 
     const handleClickClear = () => {
         setLogin('');
         setPassword('');
-        setFirstname('');
-        setLastname('');
+        setFirstName('');
+        setLastName('');
     }
 
     return (
         <div>
-
             <label>Login:
-                <input type="text"
-                    onChange={(e) => setLogin(e.target.value.trim())}
+                <input
+                    type={'text'}
+                    onChange={e => setLogin(e.target.value.trim())}
                     value={login}
                 />
             </label>
-
-
             <label>Password:
-                <input type="password"
-                    onChange={(e) => setPassword(e.target.value.trim())}
+                <input
+                    type={'password'}
+                    onChange={e => setPassword(e.target.value.trim())}
                     value={password}
                 />
             </label>
-
-            <label>Firstname:
-                <input type="text"
-                    onChange={(e) => setFirstname(e.target.value.trim())}
-                    value={firstname}
+            <label>First name:
+                <input
+                    type={'text'}
+                    onChange={e => setFirstName(e.target.value.trim())}
+                    value={firstName}
                 />
             </label>
-
-            <label>Lastname:
-                <input type="text"
-                    onChange={(e) => setLastname(e.target.value.trim())}
-                    value={lastname}
+            <label>Last name:
+                <input
+                    type={'text'}
+                    onChange={e => setLastName(e.target.value.trim())}
+                    value={lastName}
                 />
             </label>
-
-            <div>
-                <button onClick={handleClickRegister}>Register</button>
-                <button onClick={handleClickClear}>Clear</button>
-            </div>
-
+            <button onClick={handleClickRegister}>Register</button>
+            <button onClick={handleClickClear}>Clear</button>
         </div>
     )
 }

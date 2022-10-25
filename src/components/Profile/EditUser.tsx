@@ -1,28 +1,46 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
+import { useAppDispatch } from '../../app/hooks';
+import { updateUser } from '../../reducers/asyncActions/asyncActions';
 
 interface Props {
-  close: () => void;
+    close: () => void
 }
 
-const EditUser = ({ close }: Props) => {
+const EditUser = ({close}: Props) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
-  const [userName, setUserName] = useState('');
+  const dispatch = useAppDispatch();
+
+  const handleClickSave = () => {
+    dispatch(updateUser(firstName, lastName));
+    close();
+  }
+
+  const handleClickClear = () => {
+    setFirstName('');
+    setLastName('');
+  }
 
   return (
     <div>
-      <label>New User Name :
-        <input 
-        type="text"
-        placeholder='new user name' 
-        value={userName}
-        onChange={e => setUserName(e.target.value)}
+      <label>First name:
+        <input
+          type='text'
+          value={firstName}
+          onChange={e => setFirstName(e.target.value.trim())}
         />
       </label>
-
-      <button onClick={() => {
-        console.log(userName);
-      }}>Save</button>
-      <button onClick={close}>Return</button>
+      <label>Last name:
+        <input
+          type='text'
+          value={lastName}
+          onChange={e => setLastName(e.target.value.trim())}
+        />
+      </label>
+      <button onClick={handleClickSave}>Save and close</button>
+      <button onClick={handleClickClear}>Clear</button>
+      <button onClick={close}>Close without save</button>
     </div>
   )
 }

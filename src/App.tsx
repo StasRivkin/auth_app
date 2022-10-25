@@ -1,16 +1,19 @@
-import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { useAppSelector } from './app/hooks';
 import Guest from './components/Guest';
 import Profile from './components/Profile';
-import Routers from './Routers/Routers';
+import { homePage, profilePage } from './utils/constants';
 
 function App() {
+  const token = useAppSelector<string | null>(state => state.token)
   return (
-   <div className='App'>
-      {/* <Guest /> */}
-      {/* <Profile /> */}
-      <Routers />
-   </div>
+    <Routes>
+      <Route path={homePage} element={token ? <Navigate to={profilePage} /> : <Guest />} />
+      <Route path={profilePage} element={token ? <Profile /> : <Navigate to={homePage} />} />
+    </Routes>
+
+  
   );
 }
 

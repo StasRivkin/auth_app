@@ -1,46 +1,45 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useAppDispatch } from '../../app/hooks';
+import { fetchUser } from '../../reducers/asyncActions/asyncActions';
+import { createToken } from '../../utils/const';
+
 
 const Login = () => {
-
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useAppDispatch();
+    //const navigate = useNavigate()
+
 
     const handleClickLogin = () => {
-        console.log(login, password);//FIXME
+        dispatch(fetchUser(createToken(login, password)));
+
+        //navigate('/home/profile');
     }
 
     const handleClickClear = () => {
         setLogin('');
-        setPassword('')
-    
+        setPassword('');
     }
 
     return (
         <div>
-
             <label>Login:
-                <input type="text"
-                    onChange={(e) => setLogin(e.target.value.trim())}
+                <input
+                    type={'text'}
+                    onChange={e => setLogin(e.target.value.trim())}
                     value={login}
                 />
             </label>
-
-
             <label>Password:
-                <input type="password"
-                    onChange={(e) => setPassword(e.target.value.trim())}
+                <input
+                    type={'password'}
+                    onChange={e => setPassword(e.target.value.trim())}
                     value={password}
                 />
             </label>
-
-            <div>
-                <Link to={`/home/${login||'profile'}`}><button onClick={handleClickLogin}>Login</button> </Link> 
-                {/* I've made this path temporarily until we bind the user to our store , after we'll get a user from the stote, we need change login||profile to it's name */}
-                
-                <button onClick={handleClickClear}>Clear</button>
-            </div>
-
+            <button onClick={handleClickLogin}>Login</button>
+            <button onClick={handleClickClear}>Clear</button>
         </div>
     )
 }
